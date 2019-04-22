@@ -43,11 +43,11 @@ public class ActionController implements Initializable{
 
 		//パネルをpaneの子を受け取りpanelで配列として扱えるようにする
 		for(javafx.scene.Node c:pane.getChildren()) {
-			if(child < 7) {
+			if(child < 8) {
 				child++;
 				continue;
 			}
-			panel[child - 7] = (Button)c;
+			panel[child - 8] = (Button)c;
 			child++;
 		}
 
@@ -59,6 +59,7 @@ public class ActionController implements Initializable{
 		pt = new PuzzleTimer(labelTime);
 
 		puzzle.initPanel(panelValue);
+		hList.ResetHistoryList();
 		showPuzzle();
 	}
 	@FXML
@@ -218,14 +219,15 @@ public class ActionController implements Initializable{
 			labelTime.setText(pt.formatTime());
 			gi.changeInAction();
 			pt.start();
+			hList.ResetHistoryList();
 			playStopButton.setText("停止");
 		}
 	}
-	private void clear() {
+	private void gameClear() {
 		labelTime.setText(pt.formatTime());
 		gi.changeInAction();
 		pt.stop();
-		playStopButton.setText("ゲーム開始");
+		playStopButton.setText("クリア");
 	}
 	public void drawLabel(String s) {
 		labelTime.setText(s);
@@ -250,7 +252,7 @@ public class ActionController implements Initializable{
 		}
 		labelCount.setText(gi.getCount());  //手数を表示
 		if(puzzle.isClear()) {             //クリア判定
-			this.clear();
+			gameClear();
 		}
 	}
 }

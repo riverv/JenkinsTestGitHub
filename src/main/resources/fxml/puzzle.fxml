@@ -26,7 +26,7 @@
     <Label layoutX="49.0" layoutY="58.0" prefHeight="22.0" prefWidth="121.0" text="手数:" />
     <Label fx:id="labelCount" layoutX="178.0" layoutY="58.0" prefHeight="22.0" prefWidth="79.0" text="0" />
 
-
+	<Label contentDisplay="CENTER" layoutX="478.0" layoutY="40.0" prefHeight="25.0" prefWidth="227.0" text="[手数]　　[パネル番号]　　[移動方向]" />
     <ListView fx:id="historyList" layoutX="478.0" layoutY="84.0" prefHeight="253.0" prefWidth="227.0" />
 
     <Button fx:id="playStopButton" layoutX="531.0" layoutY="367.0" mnemonicParsing="false" onAction="#onClickPlayStop" prefHeight="55.0" prefWidth="121.0" text="ゲーム開始" />
@@ -47,6 +47,7 @@
 	<Button layoutX="184.0" layoutY="329.0" mnemonicParsing="false" onAction="#onClickPanel14" prefHeight="65.0" prefWidth="73.0" text="14" />
     <Button layoutX="257.0" layoutY="329.0" mnemonicParsing="false" onAction="#onClickPanel15" prefHeight="65.0" prefWidth="73.0" text="15" />
 	<Button layoutX="330.0" layoutY="329.0" mnemonicParsing="false" onAction="#onClickPanel16" prefHeight="65.0" prefWidth="73.0" text="16" />
+      
 
 
 

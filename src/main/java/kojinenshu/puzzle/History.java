@@ -28,11 +28,11 @@ public class History {
 
 
 		if(this.index[2] != -1) {
-			history = String.format("[%d][%d,%d,%d]",count,index[0],index[1],index[2] );
+			history = String.format("[%d]　　[%d,%d,%d]　",count,index[0],index[1],index[2] );
 		}else if(this.index[1] != -1) {
-			history = String.format("[%d][%d,%d]",count,index[0],index[1] );
+			history = String.format("[%d]　　　[%d,%d]　　",count,index[0],index[1] );
 		}else {
-			history = String.format("[%d][%d]",count,index[0]);
+			history = String.format("[%d]　　　[%d]　　　",count,index[0]);
 		}
 		history = history + getMoveString(move);
 		return history;

@@ -61,7 +61,7 @@ public class PanelFrame {
 					pf[i][j].setValue(0);
 
 				}else if(d == 1) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue() , History.UP);
+					hl.setListView(gi.getCountInt(), pf[i][j].getValue(), History.UP);
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j].getValue());
 					pf[i][j].setValue(0);
 

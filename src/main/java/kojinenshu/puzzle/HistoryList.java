@@ -17,16 +17,13 @@ public class HistoryList{
 		l.setItems(list);
 	}
 
-	public void setListView(int c,int i,int m) {
+	public void setListView(int c,int i, int m) {
 		setListCheck();
 		History h = new History(c,i,m);
 		addHistoryList(h);
 	}
 	public void setListView(int c,int i1,int i2,int m) {
-		if(index > 9) {
-			history.remove(0);
-			index--;
-		}
+		setListCheck();
 		History h = new History(c,i1,i2,m);
 		addHistoryList(h);
 	}
@@ -36,7 +33,7 @@ public class HistoryList{
 		addHistoryList(h);
 	}
 	private void setListCheck() {
-		if(index > 9) {
+		if(index >= HISTORY_LIST_SIZE) {
 			history.remove(0);
 			list.remove(0);
 			index--;
@@ -49,5 +46,7 @@ public class HistoryList{
 	}
 	public void ResetHistoryList() {
 		history.clear();
+		list.clear();
+		index = 0;
 	}
 }
