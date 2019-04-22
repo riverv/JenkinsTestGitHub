@@ -7,19 +7,19 @@ import javafx.util.Duration;
 
 public class PuzzleTimer {
 	private Timeline gameTime;
-	private long second,minit,hour;
+	private long second,minute,hour;
 
 	public PuzzleTimer(Label l) {
 		ResetTime();
 		gameTime = new Timeline(new KeyFrame(new Duration(1000),
-				event -> { //定間隔処理内容
+				e -> { //定間隔処理内容
 					second++;
 					if(second % 60 == 0) {
 						second=0;
-						minit++;
+						minute++;
 					}
-					if(minit % 60 == 0 && minit != 0) {
-						minit=0;
+					if(minute % 60 == 0 && minute != 0) {
+						minute = 0;
 						hour++;
 					}
 
@@ -30,11 +30,11 @@ public class PuzzleTimer {
 	}
 	public void ResetTime() {
 		this.second = 0;
-		this.minit = 0;
+		this.minute = 0;
 		this.hour = 0;
 	}
 	public String formatTime() {
-		return String.format("%02d:%02d:%02d", hour,minit,second);
+		return String.format("%02d:%02d:%02d", hour,minute,second);
 	}
 	public void stop() {
 		gameTime.stop();

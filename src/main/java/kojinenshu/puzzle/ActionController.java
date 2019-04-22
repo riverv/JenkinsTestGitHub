@@ -223,9 +223,10 @@ public class ActionController implements Initializable{
 			gi.changeInAction();
 			gi.resetCount();
 			pt.ResetTime();
+			labelTime.setText(pt.formatTime());
 			pt.start();
 			puzzle.initPanel(panelValue);
-			//hList.ResetHistoryList();
+			hList.ResetHistoryList();
 			showPuzzle();
 			playStopButton.setText("終了");
 		}
@@ -243,7 +244,6 @@ public class ActionController implements Initializable{
 	@FXML
 	public void onClickExit(ActionEvent event) {
 		System.exit(0);
-
 	}
 	private void showPuzzle() {
 		String str;
