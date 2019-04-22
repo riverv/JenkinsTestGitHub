@@ -24,9 +24,9 @@ public class ActionController implements Initializable{
 	@FXML
 	Label labelTime,labelCount;
 
-	private final int PUZZLE_SIZE = PanelFrame.PUZZLE_SIDE_SIZE * PanelFrame.PUZZLE_SIDE_SIZE;
+	//private final int PUZZLE_SIZE = PanelFrame.PUZZLE_SIDE_SIZE * PanelFrame.PUZZLE_SIDE_SIZE;
 
-	private Button[] panel= new Button[PUZZLE_SIZE];
+	private Button[] panel= new Button[PanelFrame.PUZZLE_SIZE];
 	HistoryList hList;
 	PanelFrame puzzle;
 	PuzzleTimer pt;
@@ -38,7 +38,7 @@ public class ActionController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 
 		hList = new HistoryList(historyList);
-		panelValue = new int[PUZZLE_SIZE];
+		panelValue = new int[PanelFrame.PUZZLE_SIZE];
 		int child = 0;
 
 		//パネルをpaneの子を受け取りpanelで配列として扱えるようにする
@@ -51,15 +51,15 @@ public class ActionController implements Initializable{
 			child++;
 		}
 
-		for(int i = 0; i < PUZZLE_SIZE ; i++) {
+		for(int i = 0; i < PanelFrame.PUZZLE_SIZE ; i++) {
 			panelValue[i] = i + 1;
 		}
 		gi = new GameInfo();
 		puzzle = new PanelFrame(panelValue,hList,gi);
 		pt = new PuzzleTimer(labelTime);
 
-		puzzle.initPanel(panelValue);
-		hList.ResetHistoryList();
+		//puzzle.initPanel(panelValue);
+		//hList.ResetHistoryList();
 		showPuzzle();
 	}
 	@FXML
@@ -204,30 +204,35 @@ public class ActionController implements Initializable{
 			if(puzzle.movePanel(3, 3)) {
 				gi.plusCount();
 				showPuzzle();
+				if(puzzle.isClear()) {             //クリア判定
+					gameClear();
+				}
 			}
 		}
 	}
 
 	@FXML
 	public void onClickPlayStop(ActionEvent event) {
-		if(gi.getInAction()) {
+		if(gi.getInAction()) { //ゲームを停止する
 			pt.stop();
 			gi.changeInAction();
 			pt.ResetTime();
-			playStopButton.setText("ゲーム開始");
-		}else {
+			playStopButton.setText("開始");
+		}else {               //ゲームを開始する
 			labelTime.setText(pt.formatTime());
 			gi.changeInAction();
 			pt.start();
+			puzzle.initPanel(panelValue);
 			hList.ResetHistoryList();
-			playStopButton.setText("停止");
+			showPuzzle();
+			playStopButton.setText("終了");
 		}
 	}
 	private void gameClear() {
 		labelTime.setText(pt.formatTime());
 		gi.changeInAction();
 		pt.stop();
-		playStopButton.setText("クリア");
+		playStopButton.setText("開始");
 	}
 	public void drawLabel(String s) {
 		labelTime.setText(s);
@@ -241,18 +246,16 @@ public class ActionController implements Initializable{
 	private void showPuzzle() {
 		String str;
 		puzzle.getPfValue(panelValue);
-		for(int i = 0; i < PUZZLE_SIZE ; i++) {
+		for(int i = 0; i < PanelFrame.PUZZLE_SIZE ; i++) {
 			str = String.format("%d", panelValue[i]);
 			panel[i].setText(str);
 			panel[i].setVisible(true);
 		}
-		for(int i = 0; i < PUZZLE_SIZE ; i++)
-			if(panelValue[i] == 0) {
+		for(int i = 0; i < PanelFrame.PUZZLE_SIZE ; i++)
+			if(panelValue[i] == PanelFrame.EMPTY_PANEL_VALUE) {
 				panel[i].setVisible(false);
 		}
 		labelCount.setText(gi.getCount());  //手数を表示
-		if(puzzle.isClear()) {             //クリア判定
-			gameClear();
-		}
+
 	}
 }

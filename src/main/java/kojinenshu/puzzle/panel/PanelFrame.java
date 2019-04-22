@@ -8,6 +8,8 @@ import kojinenshu.puzzle.HistoryList;
 
 public class PanelFrame {
 	public static final int PUZZLE_SIDE_SIZE = 4;
+	public static final int PUZZLE_SIZE = PUZZLE_SIDE_SIZE * PUZZLE_SIDE_SIZE;
+	public static final int EMPTY_PANEL_VALUE = PUZZLE_SIZE;
 	private Panel[][] pf = new Panel[PUZZLE_SIDE_SIZE][PUZZLE_SIDE_SIZE];
 	private Panel empty;
 	private HistoryList hl;
@@ -29,6 +31,7 @@ public class PanelFrame {
 		this.gi = g;
 		empty = pf[PUZZLE_SIDE_SIZE - 1][PUZZLE_SIDE_SIZE - 1];
 	}
+	/*ゲーム開始時 シャッフル*/
 	public void initPanel(int[] v) {
 		int random = new Random().nextInt(10) + 20;
 		int[] re = new int[16];
@@ -37,10 +40,10 @@ public class PanelFrame {
 				int l = new Random().nextInt(4);
 				movePanel(l,k);
 		}
-		for(int i= 0,k = 0;i<4;i++)
-			for(int j=0;j<4;j++,k++)
+		for(int i= 0,k = 0 ; i < 4 ; i++)
+			for(int j=0 ; j < 4 ; j++, k++)
 				v[k] = pf[i][j].getValue();
-		updateIsAction();
+
 	}
 	public boolean movePanel(int i, int j) {
 		if(pf[i][j].getIsAction()) {
@@ -53,17 +56,17 @@ public class PanelFrame {
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i-2][j].getValue());
 					pf[i-2][j].setValue(pf[i-1][j].getValue());
 					pf[i-1][j].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 				}else if(d == 2) {
 					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i-1][j].getValue(), History.UP);
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i-1][j].getValue());
 					pf[i-1][j].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}else if(d == 1) {
 					hl.setListView(gi.getCountInt(), pf[i][j].getValue(), History.UP);
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}
 
@@ -77,18 +80,18 @@ public class PanelFrame {
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i+2][j].getValue());
 					pf[i+2][j].setValue(pf[i+1][j].getValue());
 					pf[i+1][j].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}else if(d == 2) {
 					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i+1][j].getValue(), History.DOWN);
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i+1][j].getValue());
 					pf[i+1][j].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}else if(d == 1) {
 					hl.setListView(gi.getCountInt(),pf[i][j].getValue() , History.DOWN);
 					empty.setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}
 			}
@@ -101,18 +104,18 @@ public class PanelFrame {
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j-2].getValue());
 					pf[i][j-2].setValue(pf[i][j-1].getValue());
 					pf[i][j-1].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}else if(d == 2) {
 					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i][j-1].getValue(), History.LEFT);
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j-1].getValue());
 					pf[i][j-1].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}else if(d == 1) {
 					hl.setListView(gi.getCountInt(),pf[i][j].getValue() , History.LEFT);
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}
 			}
@@ -125,18 +128,18 @@ public class PanelFrame {
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j+2].getValue());
 					pf[i][j+2].setValue(pf[i][j+1].getValue());
 					pf[i][j+1].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}else if(d == 2) {
 					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i][j+1].getValue(), History.RIGHT);
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j+1].getValue());
 					pf[i][j+1].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}else if(d == 1) {
 					hl.setListView(gi.getCountInt(),pf[i][j].getValue() , History.RIGHT);
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(0);
+					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 
 				}
 			}else {
@@ -162,7 +165,7 @@ public class PanelFrame {
 		}
 	}
 	public boolean isClear() {
-		int k = 0;
+		int k = 1;
 		for(int i = 0; i < PUZZLE_SIDE_SIZE ; i++) {
 			for(int j = 0 ; j< PUZZLE_SIDE_SIZE ; j++) {
 				if(pf[i][j].getValue() != k) {
@@ -174,8 +177,8 @@ public class PanelFrame {
 		return true;
 	}
 	public void getPfValue(int[] v) {
-		for(int i= 0,k = 0;i<4;i++)
-			for(int j=0;j<4;j++,k++)
+		for(int i= 0,k = 0 ; i < PUZZLE_SIDE_SIZE ;i++)
+			for(int j=0 ; j < PUZZLE_SIDE_SIZE ; j++, k++)
 				v[k] = pf[i][j].getValue();
 	}
 
