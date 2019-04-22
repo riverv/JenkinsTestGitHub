@@ -32,14 +32,14 @@ public class PanelFrame {
 	 */
 	public void initPanel(int[] v) {
 		int random = new Random().nextInt(10) + 200;
-		int[] re = new int[16];
+		int[] re = new int[PUZZLE_SIZE];
 		for(int i = 0 ; i< random ; i++) {
-				int k = new Random().nextInt(4);
-				int l = new Random().nextInt(4);
+				int k = new Random().nextInt(PUZZLE_SIDE_SIZE);
+				int l = new Random().nextInt(PUZZLE_SIDE_SIZE);
 				movePanel(l,k);
 		}
-		for(int i= 0,k = 0 ; i < 4 ; i++)
-			for(int j=0 ; j < 4 ; j++, k++)
+		for(int i= 0,k = 0 ; i < PUZZLE_SIDE_SIZE ; i++)
+			for(int j=0 ; j < PUZZLE_SIDE_SIZE ; j++, k++)
 				v[k] = pf[i][j].getValue();
 
 	}
