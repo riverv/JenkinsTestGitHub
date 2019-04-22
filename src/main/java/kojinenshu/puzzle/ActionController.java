@@ -56,6 +56,7 @@ public class ActionController implements Initializable{
 		}
 		gi = new GameInfo();
 		puzzle = new PanelFrame(panelValue,hList,gi);
+		puzzle.updateIsAction();
 		pt = new PuzzleTimer(labelTime);
 
 		//puzzle.initPanel(panelValue);
@@ -224,7 +225,7 @@ public class ActionController implements Initializable{
 			pt.ResetTime();
 			pt.start();
 			puzzle.initPanel(panelValue);
-			hList.ResetHistoryList();
+			//hList.ResetHistoryList();
 			showPuzzle();
 			playStopButton.setText("終了");
 		}

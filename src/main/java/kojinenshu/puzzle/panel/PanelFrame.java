@@ -33,9 +33,9 @@ public class PanelFrame {
 	}
 	/*ゲーム開始時 シャッフル*/
 	public void initPanel(int[] v) {
-		int random = new Random().nextInt(10) + 30;
+		int random = new Random().nextInt(10) + 10;
 		int[] re = new int[16];
-		for(int i = 0,j = 0 ; i< random && j < 16; i++,j++) {
+		for(int i = 0 ; i< random ; i++) {
 				int k = new Random().nextInt(4);
 				int l = new Random().nextInt(4);
 				movePanel(l,k);
