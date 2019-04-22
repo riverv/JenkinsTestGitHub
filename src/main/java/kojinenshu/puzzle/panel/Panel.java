@@ -1,14 +1,16 @@
 package kojinenshu.puzzle.panel;
 
 public class Panel {
-	private int value;
-	private boolean isAction;
+	private int value;                   //現在の値
+	private boolean isAction;           //T: 動ける位置 F:動けない位置
 	private int line,row;                //位置
 
 	public Panel() {
 	}
-	public Panel(int v) {
+	public Panel(int l, int r, int v) {
 		setValue(v);
+		setLine(l);
+		setRow(r);
 	}
 	void setValue(int v) {
 		this.value = v;

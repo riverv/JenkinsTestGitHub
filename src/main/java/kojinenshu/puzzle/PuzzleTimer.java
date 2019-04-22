@@ -7,7 +7,9 @@ import javafx.util.Duration;
 
 public class PuzzleTimer {
 	private Timeline gameTime;
-	private long second,minute,hour;
+	private long second,      //秒
+	               minute,      //分
+	               hour;        //時
 
 	public PuzzleTimer(Label l) {
 		ResetTime();
@@ -28,17 +30,29 @@ public class PuzzleTimer {
 		));
 		gameTime.setCycleCount(gameTime.INDEFINITE);	//定間隔呼び出し繰り返し回数 無限
 	}
+	/*
+	 * タイマーをリセットする
+	 */
 	public void ResetTime() {
 		this.second = 0;
 		this.minute = 0;
 		this.hour = 0;
 	}
+	/*
+	 * フォーマットに沿った文字列生成
+	 */
 	public String formatTime() {
 		return String.format("%02d:%02d:%02d", hour,minute,second);
 	}
+	/*
+	 * タイマーを止める
+	 */
 	public void stop() {
 		gameTime.stop();
 	}
+	/*
+	 * タイマーをスタートさせる
+	 */
 	public void start() {
 		gameTime.play();
 	}

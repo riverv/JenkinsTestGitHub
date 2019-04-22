@@ -1,14 +1,12 @@
 package kojinenshu.puzzle;
 
 public class GameInfo {
-	private boolean inAction = false;
-	private int count = 0;
+	private boolean inAction = false; /*T:ゲーム中状態 F:ゲーム停止状態*/
+	private int count = 0;             /*手数*/
 
-/*
-	public GameInfo() {
-		inAction = false;
-	}
-*/
+	/*
+	 * ゲーム中/停止状態の切り替え
+	 */
 	public void changeInAction(){
 		inAction = !inAction;
 	}
@@ -21,10 +19,14 @@ public class GameInfo {
 	public void resetCount() {
 		count = 0;
 	}
+	/*手数を文字列として返す*/
 	public String getCount() {
 		String str = String.format("%d", count);
 		return str;
 	}
+	/*
+	 * 手数を整数型として返す
+	 */
 	public int getCountInt() {
 		return count;
 	}

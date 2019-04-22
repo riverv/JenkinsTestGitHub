@@ -15,16 +15,12 @@ import kojinenshu.puzzle.panel.PanelFrame;
 public class ActionController implements Initializable{
 	@FXML
 	private AnchorPane pane;
-	//@FXML
-	//private Button panel1, panel2, panel3, panel4, panel5, panel6,panel7, panel8, panel9, panel10, panel11, panel12, panel13,panel14, panel15, panel16;
 	@FXML
 	private Button playStopButton;
 	@FXML
 	private ListView historyList;
 	@FXML
 	Label labelTime,labelCount;
-
-	//private final int PUZZLE_SIZE = PanelFrame.PUZZLE_SIDE_SIZE * PanelFrame.PUZZLE_SIDE_SIZE;
 
 	private Button[] panel= new Button[PanelFrame.PUZZLE_SIZE];
 	HistoryList hList;
@@ -33,7 +29,9 @@ public class ActionController implements Initializable{
 	GameInfo gi;
 	int[] panelValue;
 
-
+	/*
+	 * 初期化処理
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -50,7 +48,7 @@ public class ActionController implements Initializable{
 			panel[child - 8] = (Button)c;
 			child++;
 		}
-
+		//初期値をパネルへセット
 		for(int i = 0; i < PanelFrame.PUZZLE_SIZE ; i++) {
 			panelValue[i] = i + 1;
 		}
@@ -59,8 +57,6 @@ public class ActionController implements Initializable{
 		puzzle.updateIsAction();
 		pt = new PuzzleTimer(labelTime);
 
-		//puzzle.initPanel(panelValue);
-		//hList.ResetHistoryList();
 		showPuzzle();
 	}
 	@FXML
@@ -205,20 +201,17 @@ public class ActionController implements Initializable{
 			if(puzzle.movePanel(3, 3)) {
 				gi.plusCount();
 				showPuzzle();
-				if(puzzle.isClear()) {             //クリア判定
-					gameClear();
-				}
+
 			}
 		}
 	}
 
 	@FXML
 	public void onClickPlayStop(ActionEvent event) {
-		if(gi.getInAction()) { //ゲームを停止する
-			pt.stop();
-			gi.changeInAction();
-			playStopButton.setText("開始");
-		}else {               //ゲームを開始する
+		if(gi.getInAction()) {
+			gameStop();
+		}else {
+			//ゲームを開始する
 			labelTime.setText(pt.formatTime());
 			gi.changeInAction();
 			gi.resetCount();
@@ -231,20 +224,24 @@ public class ActionController implements Initializable{
 			playStopButton.setText("終了");
 		}
 	}
-	private void gameClear() {
-		labelTime.setText(pt.formatTime());
+	/*
+	 * ゲーム終了処理
+	 */
+	private void gameStop() {
 		gi.changeInAction();
 		pt.stop();
 		playStopButton.setText("開始");
 	}
-	public void drawLabel(String s) {
-		labelTime.setText(s);
-	}
-
+	/*
+	 * アプリケーション終了処理
+	 */
 	@FXML
 	public void onClickExit(ActionEvent event) {
 		System.exit(0);
 	}
+	/*
+	 * パネルの表示を更新
+	 */
 	private void showPuzzle() {
 		String str;
 		puzzle.getPfValue(panelValue);
@@ -258,6 +255,10 @@ public class ActionController implements Initializable{
 				panel[i].setVisible(false);
 		}
 		labelCount.setText(gi.getCount());  //手数を表示
-
+		//クリア判定
+		if(puzzle.isClear()) {
+			labelTime.setText(pt.formatTime());
+			gameStop();
+		}
 	}
 }
