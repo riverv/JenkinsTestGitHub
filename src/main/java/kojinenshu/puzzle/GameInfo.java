@@ -18,7 +18,7 @@ public class GameInfo {
 	public void plusCount() {
 		count++;
 	}
-	public void clearCount() {
+	public void resetCount() {
 		count = 0;
 	}
 	public String getCount() {

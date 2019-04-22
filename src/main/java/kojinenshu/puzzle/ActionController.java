@@ -216,11 +216,12 @@ public class ActionController implements Initializable{
 		if(gi.getInAction()) { //ゲームを停止する
 			pt.stop();
 			gi.changeInAction();
-			pt.ResetTime();
 			playStopButton.setText("開始");
 		}else {               //ゲームを開始する
 			labelTime.setText(pt.formatTime());
 			gi.changeInAction();
+			gi.resetCount();
+			pt.ResetTime();
 			pt.start();
 			puzzle.initPanel(panelValue);
 			hList.ResetHistoryList();

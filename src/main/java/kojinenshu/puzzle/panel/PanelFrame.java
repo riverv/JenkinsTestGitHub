@@ -33,7 +33,7 @@ public class PanelFrame {
 	}
 	/*ゲーム開始時 シャッフル*/
 	public void initPanel(int[] v) {
-		int random = new Random().nextInt(10) + 20;
+		int random = new Random().nextInt(10) + 30;
 		int[] re = new int[16];
 		for(int i = 0,j = 0 ; i< random && j < 16; i++,j++) {
 				int k = new Random().nextInt(4);
