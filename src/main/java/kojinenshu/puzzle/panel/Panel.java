@@ -11,6 +11,7 @@ public class Panel {
 		setValue(v);
 		setLine(l);
 		setRow(r);
+		setIsAction(false);
 	}
 	void setValue(int v) {
 		this.value = v;

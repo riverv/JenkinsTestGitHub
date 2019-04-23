@@ -37,7 +37,6 @@ public class History {
 	 */
 	public String createHistory() {
 		String history;
-		String[] m = new String[3];
 
 
 		if(this.index[2] != -1) {

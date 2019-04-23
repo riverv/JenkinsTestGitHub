@@ -18,16 +18,16 @@ public class ActionController implements Initializable{
 	@FXML
 	private Button playStopButton;
 	@FXML
-	private ListView historyList;
+	private ListView<String> historyList;
 	@FXML
 	Label labelTime,labelCount;
 
-	private Button[] panel= new Button[PanelFrame.PUZZLE_SIZE];
+	private Button[] Viewpanel= new Button[PanelFrame.PUZZLE_SIZE]; //実際にFXMLで表記されているパネルと対応
 	HistoryList hList;
-	PanelFrame puzzle;
+	PanelFrame puzzle;                                                  //情報を扱うパネルの総体
 	PuzzleTimer pt;
 	GameInfo gi;
-	int[] panelValue;
+	int[] panelValue;                                                  //panelとpazzuleの橋渡し
 
 	/*
 	 * 初期化処理
@@ -41,24 +41,24 @@ public class ActionController implements Initializable{
 
 		//パネルをpaneの子を受け取りpanelで配列として扱えるようにする
 		for(javafx.scene.Node c:pane.getChildren()) {
-			if(child < 8) {
+			if(child < 8) {   //上部は他ボタンやラベルのため無視
 				child++;
 				continue;
 			}
-			panel[child - 8] = (Button)c;
+			Viewpanel[child - 8] = (Button)c;
 			child++;
 		}
+		gi = new GameInfo();
+		pt = new PuzzleTimer(labelTime);
 		//初期値をパネルへセット
 		for(int i = 0; i < PanelFrame.PUZZLE_SIZE ; i++) {
 			panelValue[i] = i + 1;
 		}
-		gi = new GameInfo();
 		puzzle = new PanelFrame(panelValue,hList,gi);
-		puzzle.updateIsAction();
-		pt = new PuzzleTimer(labelTime);
 
 		showPuzzle();
 	}
+
 	@FXML
 	public void onClickPanel1(ActionEvent event) {
 		if(gi.getInAction()) {
@@ -211,15 +211,17 @@ public class ActionController implements Initializable{
 		if(gi.getInAction()) {
 			gameStop();
 		}else {
-			//ゲームを開始する
-			labelTime.setText(pt.formatTime());
+		//ゲームを開始する
+			//ゲームリセット
+			puzzle.updateIsAction();
 			gi.changeInAction();
 			gi.resetCount();
+			hList.ResetHistoryList();
 			pt.ResetTime();
 			labelTime.setText(pt.formatTime());
-			pt.start();
+			//次のゲーム準備
 			puzzle.initPanel(panelValue);
-			hList.ResetHistoryList();
+			pt.start();
 			showPuzzle();
 			playStopButton.setText("終了");
 		}
@@ -244,15 +246,15 @@ public class ActionController implements Initializable{
 	 */
 	private void showPuzzle() {
 		String str;
-		puzzle.getPfValue(panelValue);
+		puzzle.getPanelFrameValue(panelValue);
 		for(int i = 0; i < PanelFrame.PUZZLE_SIZE ; i++) {
 			str = String.format("%d", panelValue[i]);
-			panel[i].setText(str);
-			panel[i].setVisible(true);
+			Viewpanel[i].setText(str);
+			Viewpanel[i].setVisible(true);
 		}
 		for(int i = 0; i < PanelFrame.PUZZLE_SIZE ; i++)
 			if(panelValue[i] == PanelFrame.EMPTY_PANEL_VALUE) {
-				panel[i].setVisible(false);
+				Viewpanel[i].setVisible(false);
 		}
 		labelCount.setText(gi.getCount());  //手数を表示
 		//クリア判定

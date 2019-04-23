@@ -24,7 +24,7 @@ public class MainApp extends Application {
         Scene scene = new Scene(rootNode, 800, 500);
         scene.getStylesheets().add("/styles/puzzleStyle.css");
 
-        stage.setTitle("Hello JavaFX and Maven");
+        stage.setTitle("15Puzzle");
         stage.setScene(scene);
         stage.show();
    }
