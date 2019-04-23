@@ -216,11 +216,11 @@ public class ActionController implements Initializable{
 			puzzle.updateIsAction();
 			gi.changeInAction();
 			gi.resetCount();
-			hList.ResetHistoryList();
 			pt.ResetTime();
 			labelTime.setText(pt.formatTime());
 			//次のゲーム準備
 			puzzle.initPanel(panelValue);
+			hList.ResetHistoryList(); //ランダムの履歴削除
 			pt.start();
 			showPuzzle();
 			playStopButton.setText("終了");
