@@ -136,7 +136,7 @@ public class ActionController implements Initializable{
 			String str = puzzle.movePanel(i, j) ;
 			if(str != null) {
 				gi.plusCount();
-				str = history.setView(gi.getCount(),str);
+				str = history.setHistoryData(gi.getCount(),str);
 				list.add(str);
 				if(!history.isHistoryOver()) {
 					list.remove(0);
@@ -179,7 +179,7 @@ public class ActionController implements Initializable{
 	 * アプリケーション終了処理
 	 */
 	@FXML
-	public void onClickExit(ActionEvent event) {
+	private void onClickExit(ActionEvent event) {
 		System.exit(0);
 	}
 	/*

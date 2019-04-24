@@ -6,8 +6,9 @@ public class PanelFrame {
 	public static final int PUZZLE_SIDE_SIZE = 4;                                      //パズル1辺の大きさ
 	public static final int PUZZLE_SIZE = PUZZLE_SIDE_SIZE * PUZZLE_SIDE_SIZE;     //パズルの大きさ
 	public static final int EMPTY_PANEL_VALUE = PUZZLE_SIZE;                         //空パネルが保持している値
-	private Panel[][] pf = new Panel[PUZZLE_SIDE_SIZE][PUZZLE_SIDE_SIZE];
 	public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3;
+
+	private Panel[][] pf = new Panel[PUZZLE_SIDE_SIZE][PUZZLE_SIDE_SIZE];
 	private Panel empty;
 
 	public PanelFrame(int[] v) {
