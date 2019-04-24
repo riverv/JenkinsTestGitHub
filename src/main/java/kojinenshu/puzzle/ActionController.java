@@ -3,6 +3,8 @@ package kojinenshu.puzzle;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,8 +24,9 @@ public class ActionController implements Initializable{
 	@FXML
 	Label labelTime,labelCount;
 
+	private ObservableList<String> list;
 	private Button[] Viewpanel= new Button[PanelFrame.PUZZLE_SIZE]; //実際にFXMLで表記されているパネルと対応
-	HistoryList hList;
+	History history;
 	PanelFrame puzzle;                                                  //情報を扱うパネルの総体
 	PuzzleTimer pt;
 	GameInfo gi;
@@ -35,7 +38,7 @@ public class ActionController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		hList = new HistoryList(historyList);
+		history = new History();
 		panelValue = new int[PanelFrame.PUZZLE_SIZE];
 		int child = 0;
 
@@ -54,158 +57,95 @@ public class ActionController implements Initializable{
 		for(int i = 0; i < PanelFrame.PUZZLE_SIZE ; i++) {
 			panelValue[i] = i + 1;
 		}
-		puzzle = new PanelFrame(panelValue,hList,gi);
-
+		puzzle = new PanelFrame(panelValue);
+		list = FXCollections.observableArrayList();
+		historyList.setItems(list);
 		showPuzzle();
 	}
 
 	@FXML
 	public void onClickPanel1(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(0, 0)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(0,0);
 
 	}
 	@FXML
 	public void onClickPanel2(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(0, 1)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(0,1);
 	}
 	@FXML
 	public void onClickPanel3(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(0, 2)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(0,2);
 	}
 	@FXML
 	public void onClickPanel4(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(0, 3)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(0,3);
 	}
 	@FXML
 	public void onClickPanel5(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(1, 0)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(1,0);
 	}
 	@FXML
 	public void onClickPanel6(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(1, 1)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(1,1);
 	}
 	@FXML
 	public void onClickPanel7(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(1, 2)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(1,2);
 	}
 	@FXML
 	public void onClickPanel8(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(1, 3)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(1,3);
 	}
 	@FXML
 	public void onClickPanel9(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(2, 0)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(2,0);
 	}
 	@FXML
 	public void onClickPanel10(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(2, 1)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(2,1);
 	}
 	@FXML
 	public void onClickPanel11(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(2, 2)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(2,2);
 	}
 	@FXML
 	public void onClickPanel12(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(2, 3)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(2,3);
 	}
 	@FXML
 	public void onClickPanel13(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(3, 0)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(3,0);
 	}
 	@FXML
 	public void onClickPanel14(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(3, 1)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(3,1);
 	}
 	@FXML
 	public void onClickPanel15(ActionEvent event) {
-		if(gi.getInAction()) {
-			if(puzzle.movePanel(3, 2)) {
-				gi.plusCount();
-				showPuzzle();
-			}
-		}
+		onClick(3,2);
 	}
 	@FXML
 	public void onClickPanel16(ActionEvent event) {
+		onClick(3,3);
+	}
+	/*
+	 * パネルクリック処理
+	 */
+	private void onClick(int i, int j) {
 		if(gi.getInAction()) {
-			if(puzzle.movePanel(3, 3)) {
+			String str = puzzle.movePanel(i, j) ;
+			if(str != null) {
 				gi.plusCount();
+				str = history.setView(gi.getCount(),str);
+				list.add(str);
+				if(!history.isHistoryOver()) {
+					list.remove(0);
+				}
 				showPuzzle();
-
+				CheckGameClear();
 			}
 		}
 	}
-
 	@FXML
 	public void onClickPlayStop(ActionEvent event) {
 		if(gi.getInAction()) {
@@ -220,7 +160,8 @@ public class ActionController implements Initializable{
 			labelTime.setText(pt.formatTime());
 			//次のゲーム準備
 			puzzle.initPanel(panelValue);
-			hList.ResetHistoryList(); //ランダムの履歴削除
+			history.ResetHistory();
+			list.clear();
 			pt.start();
 			showPuzzle();
 			playStopButton.setText("終了");
@@ -256,11 +197,15 @@ public class ActionController implements Initializable{
 			if(panelValue[i] == PanelFrame.EMPTY_PANEL_VALUE) {
 				Viewpanel[i].setVisible(false);
 		}
-		labelCount.setText(gi.getCount());  //手数を表示
-		//クリア判定
+		labelCount.setText(gi.getCountStr());  //手数を表示
+	}
+	/*
+	 * クリア判定
+	 */
+	private void CheckGameClear() {
 		if(puzzle.isClear()) {
-			labelTime.setText(pt.formatTime());
 			gameStop();
+			//showPuzzle()
 		}
 	}
 }

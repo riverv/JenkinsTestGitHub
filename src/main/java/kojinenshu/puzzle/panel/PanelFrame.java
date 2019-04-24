@@ -2,20 +2,15 @@ package kojinenshu.puzzle.panel;
 
 import java.util.Random;
 
-import kojinenshu.puzzle.GameInfo;
-import kojinenshu.puzzle.History;
-import kojinenshu.puzzle.HistoryList;
-
 public class PanelFrame {
 	public static final int PUZZLE_SIDE_SIZE = 4;                                      //パズル1辺の大きさ
 	public static final int PUZZLE_SIZE = PUZZLE_SIDE_SIZE * PUZZLE_SIDE_SIZE;     //パズルの大きさ
 	public static final int EMPTY_PANEL_VALUE = PUZZLE_SIZE;                         //空パネルが保持している値
 	private Panel[][] pf = new Panel[PUZZLE_SIDE_SIZE][PUZZLE_SIDE_SIZE];
+	public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3;
 	private Panel empty;
-	private HistoryList hl;
-	private GameInfo gi;
 
-	public PanelFrame(int[] v,HistoryList hList,GameInfo g) {
+	public PanelFrame(int[] v) {
 		int k = 0;
 		for(int i = 0; i < PUZZLE_SIDE_SIZE ; i++) {
 			for(int j = 0 ; j< PUZZLE_SIDE_SIZE ; j++) {
@@ -23,8 +18,6 @@ public class PanelFrame {
 				k++;
 			}
 		}
-		this.hl = hList;
-		this.gi = g;
 		empty = pf[PUZZLE_SIDE_SIZE - 1][PUZZLE_SIDE_SIZE - 1];
 	}
 	/*
@@ -44,114 +37,104 @@ public class PanelFrame {
 	}
 	/*
 	 * 指定したパネルを動ける方向へ移動
+	 * 移動したパネル番号と方向を文字列で返す
 	 */
-	public boolean movePanel(int i, int j) {
+	public String movePanel(int i, int j) {
 		//動けるかを判定
 		if(pf[i][j].getIsAction()) {
+			String res = "";
 			//上に移動
 			if(empty.getLine() < i) {
 				int d = Math.abs(empty.getLine() - i);
 				//3つ
 				if(d == 3) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i-1][j].getValue(),pf[i-2][j].getValue() , History.UP);
+					res = String.format("[%d,%d,%d]　", pf[i][j].getValue(),pf[i-1][j].getValue(),pf[i-2][j].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i-2][j].getValue());
 					pf[i-2][j].setValue(pf[i-1][j].getValue());
 					pf[i-1][j].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 				//2つ
 				}else if(d == 2) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i-1][j].getValue(), History.UP);
+					res = String.format("[%d,%d]　　", pf[i][j].getValue(),pf[i-1][j].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i-1][j].getValue());
 					pf[i-1][j].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 				//1つ
 				}else if(d == 1) {
-					hl.setListView(gi.getCountInt(), pf[i][j].getValue(), History.UP);
+					res = String.format("[%d]　　　", pf[i][j].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
-
 				}
-
+				res = res + getMoveString(UP);
 			}
 			//下に移動
 			else if(empty.getLine() > i) {
 				int d = Math.abs(empty.getLine() - i);
 				//3つ
 				if(d == 3) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i+1][j].getValue(),pf[i+2][j].getValue() , History.DOWN);
+					res = String.format("[%d,%d,%d]　", pf[i][j].getValue(),pf[i+1][j].getValue(),pf[i+2][j].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i+2][j].getValue());
 					pf[i+2][j].setValue(pf[i+1][j].getValue());
 					pf[i+1][j].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 				//2つ
 				}else if(d == 2) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i+1][j].getValue(), History.DOWN);
+					res = String.format("[%d,%d]　　", pf[i][j].getValue(),pf[i+1][j].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i+1][j].getValue());
 					pf[i+1][j].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 				//1つ
 				}else if(d == 1) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue() , History.DOWN);
+					res = String.format("[%d]　　　", pf[i][j].getValue());
 					empty.setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
-
 				}
+				res = res + getMoveString(DOWN);
 			}
 			//左に移動
 			else if(empty.getRow() < j) {
 				int d = Math.abs(empty.getRow() - j);
 				//3つ
 				if(d == 3) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i][j-1].getValue(),pf[i][j-2].getValue() , History.LEFT);
+					res = String.format("[%d,%d,%d]　", pf[i][j].getValue(),pf[i][j-1].getValue(),pf[i][j-2].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j-2].getValue());
 					pf[i][j-2].setValue(pf[i][j-1].getValue());
 					pf[i][j-1].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 				//2つ
 				}else if(d == 2) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i][j-1].getValue(), History.LEFT);
+					res = String.format("[%d,%d]　　", pf[i][j].getValue(),pf[i][j-1].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j-1].getValue());
 					pf[i][j-1].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 				//1つ
 				}else if(d == 1) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue() , History.LEFT);
+					res = String.format("[%d]　　　", pf[i][j].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
-
 				}
+				res = res + getMoveString(LEFT);
 			}
 			//右に移動
 			else if(empty.getRow() > j) {
 				int d = Math.abs(empty.getRow() - j);
 				//3つ
 				if(d == 3) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i][j+1].getValue(),pf[i][j+2].getValue() , History.RIGHT);
+					res = String.format("[%d,%d,%d]　", pf[i][j].getValue(),pf[i][j+1].getValue(),pf[i][j+2].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j+2].getValue());
 					pf[i][j+2].setValue(pf[i][j+1].getValue());
 					pf[i][j+1].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 				//2つ
 				}else if(d == 2) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue(),pf[i][j+1].getValue(), History.RIGHT);
+					res = String.format("[%d,%d]　　", pf[i][j].getValue(),pf[i][j+1].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j+1].getValue());
 					pf[i][j+1].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
 				//1つ
 				}else if(d == 1) {
-					hl.setListView(gi.getCountInt(),pf[i][j].getValue() , History.RIGHT);
+					res = String.format("[%d]　　　", pf[i][j].getValue());
 					pf[empty.getLine()][empty.getRow()].setValue(pf[i][j].getValue());
-					pf[i][j].setValue(EMPTY_PANEL_VALUE);
-
 				}
+				res = res + getMoveString(RIGHT);
 			}else {
-				return false;
+				return null;
 			}
+			pf[i][j].setValue(EMPTY_PANEL_VALUE);
 			empty = pf[i][j];
 			updateIsAction();
-			return true;
+			return res;
 		}else {
-			return false;
+			return null;
 		}
 	}
 	/*
@@ -192,5 +175,16 @@ public class PanelFrame {
 			for(int j=0 ; j < PUZZLE_SIDE_SIZE ; j++, k++)
 				v[k] = pf[i][j].getValue();
 	}
-
+	/*
+	 * 方向の整数値を文字列に置き換える
+	 */
+	public static String getMoveString(int m) {
+		switch(m) {
+			case UP:	return "[上]";
+			case DOWN:	return "[下]";
+			case LEFT:	return "[左]";
+			case RIGHT:return "[右]";
+			default: 	return "";
+		}
+	}
 }

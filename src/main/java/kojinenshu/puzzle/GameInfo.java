@@ -20,14 +20,14 @@ public class GameInfo {
 		count = 0;
 	}
 	/*手数を文字列として返す*/
-	public String getCount() {
+	public String getCountStr() {
 		String str = String.format("%d", count);
 		return str;
 	}
 	/*
 	 * 手数を整数型として返す
 	 */
-	public int getCountInt() {
+	public int getCount() {
 		return count;
 	}
 }
