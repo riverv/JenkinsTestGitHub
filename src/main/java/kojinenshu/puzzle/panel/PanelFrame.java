@@ -1,4 +1,4 @@
-package kojinenshu.puzzle;
+package kojinenshu.puzzle.panel;
 
 import java.util.Random;
 

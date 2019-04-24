@@ -1,4 +1,4 @@
-package kojinenshu.puzzle;
+package kojinenshu.puzzle.panel;
 
 public class Panel {
 	private int value;                   //現在の値
