@@ -1,13 +1,17 @@
 pipeline{
-    agent any
+    agent {
+         docker{
+             image 'puzzle-image'
+         }
+    }
     tools{
-        //maven 'apache-maven-4.0.0' 
+        maven 'apache-maven-4.0.0' 
     }
     stages{
         stage('Build'){
             steps{
                 sh 'echo build start!'
-                //sh 'mvn package'
+                sh 'mvn package'
             }
         }
         stage('Execute'){
@@ -17,7 +21,7 @@ pipeline{
         }
     }
     post{
-        alweys{
+        always{
             sh 'Build!'
         }
         success{
