@@ -1,13 +1,13 @@
 pipeline{
     agent any
     tools{
-        maven 'apache-maven-4.0.0' 
+        //maven 'apache-maven-4.0.0' 
     }
     stages{
         stage('Build'){
             steps{
                 sh 'echo build start!'
-                sh 'mvn package'
+                //sh 'mvn package'
             }
         }
         stage('Execute'){
