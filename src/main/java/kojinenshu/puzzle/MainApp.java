@@ -23,7 +23,7 @@ public class MainApp extends Application {
 
         Scene scene = new Scene(rootNode, 800, 500);
         scene.getStylesheets().add("/styles/puzzleStyle.css");
-//Jenkinstest
+//Jenkins  test
         stage.setTitle("15Puzzle");
         stage.setScene(scene);
         stage.show();
