@@ -5,7 +5,7 @@ pipeline{
          }
     }
     tools{
-        maven 'apache-maven-4.0.0' 
+        maven 'apache-maven-3.6.1' 
     }
     stages{
         stage('Build'){
@@ -14,12 +14,6 @@ pipeline{
                 sh 'mvn package'
             }
         }
-        stage('Execute'){
-            steps{
-                //sh 'mvn exec:java'
-            }
-        }
-    }
     post{
         always{
             sh 'Build!'
