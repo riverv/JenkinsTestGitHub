@@ -1,7 +1,7 @@
 #!groovy
 pipeline{
     agent {
-        docker {image 'maven: puzzle-image'}
+        docker {image 'maven: 3-alpine'}
     }
     stages{
        stage('Build'){
