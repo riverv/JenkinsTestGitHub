@@ -6,7 +6,7 @@ pipeline{
     stages{
        stage('Build'){
             steps{
-                sh 'echo "image docker"'
+                sh 'echo "lets build"'
                 sh 'mvn compile'
             }
        }
